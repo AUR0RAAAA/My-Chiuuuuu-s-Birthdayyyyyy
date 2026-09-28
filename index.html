@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Chiuuuu! ❤️</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --bg: #fff0f3;
+      --card-bg: #ffffff;
+      --accent: #ff4d6d;
+      --text: #590d22;
+    }
+    body {
+      margin: 0; padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg); color: var(--text);
+      display: flex; justify-content: center; align-items: center;
+      min-height: 95vh; text-align: center;
+    }
+    .container {
+      background: var(--card-bg);
+      padding: 30px; border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(255, 77, 109, 0.15);
+      max-width: 500px; width: 100%;
+    }
+    h1 { font-size: 1.8rem; margin-bottom: 10px; }
+    p { font-size: 1rem; line-height: 1.5; margin-bottom: 20px; }
+    input {
+      width: 85%; padding: 12px;
+      border: 2px solid #ffccd5; border-radius: 8px;
+      font-size: 1rem; text-align: center; outline: none;
+    }
+    input:focus { border-color: var(--accent); }
+    button {
+      margin-top: 15px; padding: 12px 25px;
+      background: var(--accent); color: white;
+      border: none; border-radius: 8px;
+      font-size: 1rem; font-weight: bold; cursor: pointer;
+    }
+    .hidden { display: none !important; }
+    .error { color: red; font-size: 0.85rem; margin-top: 10px; }
+    
+    /* Media Grid */
+    .media-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-top: 20px;
+    }
+    .media-grid img {
+      width: 100%; height: 150px; object-fit: cover; border-radius: 10px;
+    }
+    video {
+      width: 100%; border-radius: 10px; margin-top: 15px;
+    }
+    .letter {
+      background: #fff8f9; padding: 15px;
+      border-left: 4px solid var(--accent);
+      border-radius: 8px; margin-top: 20px; text-align: left;
+    }
+    audio { width: 100%; margin-top: 15px; outline: none; }
+  </style>
+</head>
+<body>
+
+  <!-- QUIZ SECTION -->
+  <div class="container" id="quiz-section">
+    <h1>Unlock Your Surprise 🔐</h1>
+    <p id="question-text">Question 1...</p>
+    <input type="text" id="answer-input" placeholder="Type your answer..." autocomplete="off">
+    <br>
+    <button onclick="checkAnswer()">Next</button>
+    <p id="error-msg" class="error hidden">Incorrect. Try again, Chiuuuu!</p>
+  </div>
+
+  <!-- REVEAL SECTION -->
+  <div class="container hidden" id="reveal-section">
+    <h1>Happy Birthday, Sakshi! 🎉❤️</h1>
+    <p>You unlocked it!</p>
+
+    <!-- AUDIO -->
+    <audio controls autoplay loop>
+      <!-- REPLACE 'song.mp3' WITH YOUR AUDIO FILE NAME OR LINK -->
+      <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- PHOTOS -->
+    <div class="media-grid">
+      <!-- REPLACE WITH YOUR PHOTO FILENAMES -->
+      <img src="photo1.jpg" alt="Us">
+      <img src="photo2.jpg" alt="Us">
+      <img src="photo3.jpg" alt="Us">
+      <img src="photo4.jpg" alt="Us">
+    </div>
+
+    <!-- VIDEO -->
+    <!-- REPLACE 'video.mp4' WITH YOUR VIDEO FILENAME -->
+    <video controls>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+
+    <!-- LETTER -->
+    <div class="letter">
+      <p><strong>To my Chiuuuu,</strong></p>
+      <p>I know the real letter is in your hands right now. But I still just wanted to tell you I love you and I am so grateful for you.</p>
+      <p>Forever yours,<br>Rutul</p>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "Where did we first meet emotionally?", a: "somnath" },
+      { q: "What is my go-to order when we eat out?", a: "you" },
+      { q: "Our secret favorite trip?", a: "alibaug" }
+    ];
+    let currentQ = 0;
+
+    document.getElementById("question-text").innerText = questions[currentQ].q;
+
+    function checkAnswer() {
+      const input = document.getElementById("answer-input").value.trim().toLowerCase();
+      const errorMsg = document.getElementById("error-msg");
+
+      if (input === questions[currentQ].a) {
+        errorMsg.classList.add("hidden");
+        document.getElementById("answer-input").value = "";
+        currentQ++;
+
+        if (currentQ < questions.length) {
+          document.getElementById("question-text").innerText = questions[currentQ].q;
+        } else {
+          showReveal();
+        }
+      } else {
+        errorMsg.classList.remove("hidden");
+      }
+    }
+
+    function showReveal() {
+      document.getElementById("quiz-section").classList.add("hidden");
+      document.getElementById("reveal-section").classList.remove("hidden");
+      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+    }
+  </script>
+</body>
+</html>
